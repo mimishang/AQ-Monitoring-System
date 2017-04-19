@@ -1,46 +1,39 @@
-//Analog Read code for testing Ozone Sensor
-
-//Define analog input and values for for Mics 03 sensor:
-//const int PM=A1;
-int OzoneMSensorValue=0;
-
-//Define input for Aeroqual Sensor
-//const int OzoneAPin=A2;
-int OzoneASensorValue=0;
-
-// include the library code:
-#include <LiquidCrystal.h>
-
-// initialize the library with the numbers of the interface pins
-//LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
-
+/* Grove - Dust Sensor Demo v1.0
+Interface to Shinyei Model PPD42NS Particle Sensor
+Program by Christopher Nafis
+Written April 2012
+http://www.seeedstudio.com/depot/grove-dust-sensor-p-1050.html
+http://www.sca-shinyei.com/pdf/PPD42NS.pdf
+JST Pin 1 (Black Wire) => Arduino GND
+JST Pin 3 (Red wire) => Arduino 5VDC
+JST Pin 4 (Yellow wire) => Arduino Digital Pin 8
+*/
+int pin = 6;
+unsigned long duration;
+unsigned long starttime;
+unsigned long sampletime_ms = 5000;//sampe 5s ;
+unsigned long lowpulseoccupancy = 0;
+float ratio = 0;
+float concentration = 0;
 void setup() {
  Serial.begin(9600);
-  Serial.println("PM Sensor Raw Readings");
-
-  // set up the LCD's number of columns and rows:
-  //lcd.begin(16, 2);
-  //lcd.setCursor(0,0);
- // lcd.print('             ');
-
+ pinMode(6,INPUT);
+ starttime = millis();//get the current time;
 }
 
-void loop() {
-  //Read Ozone from sensor
-  OzoneMSensorValue=digitalRead(6); //Read value from ozone pin
-  Serial.print("PM Sensor = ");
-  Serial.println(OzoneMSensorValue);
-    //lcd.setCursor(0, 0);
-  //lcd.print("Mics: ");
-   //lcd.print(OzoneMSensorValue);
-  //OzoneASensorValue=analogRead(OzoneAPin); //Read value from ozone pin
-  //Serial.print("Aeroqual Sensor = ");
-  //Serial.println(OzoneASensorValue);
-  //lcd.setCursor(0, 1);
-  //lcd.print("Aero: ");
-  // lcd.print(OzoneASensorValue);
- 
-  //Serial.println();
-  delay(2000);
-
+void 
+loop() {
+ duration = pulseIn(pin, LOW);
+ lowpulseoccupancy = lowpulseoccupancy+duration;
+ if ((millis()-starttime) > sampletime_ms){//if the sampel time == 30s 
+  ratio = lowpulseoccupancy/(sampletime_ms*10.0); // Integer percentage 0=>100
+  concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
+  Serial.print("concentration = ");
+  Serial.print(concentration*3.53);
+  Serial.println(" pcs/l");
+  Serial.println("\n");
+  lowpulseoccupancy = 0;
+  starttime = millis();
+ }
 }
+
