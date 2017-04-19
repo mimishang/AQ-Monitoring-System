@@ -17,7 +17,11 @@
 //the Google Script (uses https). Alternatly use Ivan's SecureWifi encryption
 //Modified By Sam Salin for the GBRL
 //Arduino Actually Can HTTPS, hoping to modify the code to use it
-
+//PIN INFORMATION
+//  PPM   -> MKR_0
+//  Ozone -> A1
+//  CO    -> A3
+//  SHT31 -> iic (SCL/SDA)
 #include <WiFi101.h>
 #include "Adafruit_SHT31.h"
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
@@ -28,11 +32,11 @@ Adafruit_SHT31 sht31 = Adafruit_SHT31();
 const char WEBSITE[] = "api.pushingbox.com"; //pushingbox API server
 const String devid = "v9606769D2CC718F"; //device ID on Pushingbox for our Scenario
 
-const char* MY_SSID = "PSU";
-const char* MY_PWD =  "";
+const char* MY_SSID = "PSU"; //does not currently seem to want to connect to PSU network, can connect at home fine
+const char* MY_PWD =  ""; //wifi password
 
 //Define analog input and values for for Mics 03 sensor:
-const int OzoneMPin=A1;
+const int OzoneMPin=A1; 
 int OzoneMSensorValue=0;
 
 //Set Up digital pin for Shinyei PM sensor
