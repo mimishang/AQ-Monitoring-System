@@ -134,19 +134,21 @@ void loop() {
   //read CO
   int hicData = analogRead(COPin);
 
-  Serial.print("Humidity: ");
-  Serial.print(humidityData);
-  Serial.print(" %\t");
   Serial.print("Temperature: ");
-  Serial.print(celData);
-  Serial.print(" *C ");
-  Serial.print(fehrData);
+  Serial.print(humidityData);
   Serial.print(" *F\t");
-  Serial.print("Heat index: ");
+  Serial.print("Humidity: ");
+  Serial.print(celData);
+  Serial.print("%\t");
+  Serial.print("PPM:  ");
+  Serial.print(fehrData);
+  Serial.print("\t");
+  Serial.print("Ozone Concentration: ");
   Serial.print(hicData);
-  Serial.print(" *C ");
+  Serial.print("\t");
+  Serial.print("CO Concentration: ");
   Serial.print(hifData);
-  Serial.println(" *F\n");
+  Serial.println("\n");
 
 Serial.println("\nSending Data to Server..."); 
   // if you get a connection, report back via serial:
