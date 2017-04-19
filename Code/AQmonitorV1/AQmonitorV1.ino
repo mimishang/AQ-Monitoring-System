@@ -79,26 +79,26 @@ void printWifiStatus() {
 void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
-  while (!Serial) 
-  {
+  while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
+  Serial.println("serial conection initialized");
 
   // attempt to connect to Wifi network:
-  while (status != WL_CONNECTED) 
-  {
+  while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to Network: ");
     Serial.println(MY_SSID);
     //Connect to WPA/WPA2 network.Change this line if using open/WEP network
-    status = WiFi.begin(MY_SSID, MY_PWD);
+    //status = WiFi.begin(MY_SSID, MY_PWD); //connect to secured wifi
+    status = WiFi.begin(MY_SSID); //connect to open wifi
     delay(10000);  // wait 10 seconds for connection:
   }
   Serial.println("Connected to wifi");
   printWifiStatus();
   if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
     Serial.println("Couldn't find SHT31");
-  
   }
+  Serial.println("found SHT31");
 }
 
 void loop() {
@@ -110,17 +110,16 @@ void loop() {
   //Use float for higher resolution
   
   //read temp
-  int humidityData = sht31.readTemperature(); 
+  int humidityData = 0;// sht31.readTemperature(); 
   //read humidity
-  int celData = sht31.readHumidity();
+  int celData = 0;//sht31.readHumidity();
  
   //Read Particle Count from PM sensor
 
   duration = pulseIn(pin, LOW);
   lowpulseoccupancy = lowpulseoccupancy+duration;
 
-  if ((millis()-starttime) > sampletime_ms)
-  {
+  if ((millis()-starttime) > sampletime_ms){
     ratio = lowpulseoccupancy/(sampletime_ms*10.0);  // Integer percentage 0=>100
     concentration = 1.1*pow(ratio,3)-3.8*pow(ratio,2)+520*ratio+0.62; // using spec sheet curve
     //Serial.print(lowpulseoccupancy);
@@ -140,27 +139,26 @@ void loop() {
 
   Serial.print("Temperature: ");
   Serial.print(humidityData);
-  Serial.print(" *F\t");
+  Serial.print(" *F\n");
   Serial.print("Humidity: ");
   Serial.print(celData);
-  Serial.print("%\t");
+  Serial.print("%\n");
   Serial.print("PPM:  ");
   Serial.print(fehrData);
-  Serial.print("\t");
+  Serial.print("\n");
   Serial.print("Ozone Concentration: ");
   Serial.print(hicData);
-  Serial.print("\t");
+  Serial.print("\n");
   Serial.print("CO Concentration: ");
   Serial.print(hifData);
   Serial.println("\n");
 
-Serial.println("\nSending Data to Server..."); 
-  // if you get a connection, report back via serial:
-WiFiClient client;  //Instantiate WiFi object, can scope from here or Globally
+  Serial.println("\nSending Data to Server..."); 
+    // if you get a connection, report back via serial:
+  WiFiClient client;  //Instantiate WiFi object, can scope from here or Globally
 
     //API service using WiFi Client through PushingBox then relayed to Google
-    if (client.connect(WEBSITE, 80))
-      { 
+    if (client.connect(WEBSITE, 80)){ 
          client.print("GET /pushingbox?devid=" + devid
        + "&humidityData=" + (String) humidityData
        + "&celData="      + (String) celData
@@ -178,6 +176,6 @@ WiFiClient client;  //Instantiate WiFi object, can scope from here or Globally
       //for MKR1000, unlike esp8266, do not close connection
       client.println();
       Serial.println("\nData Sent"); 
-      }
+    }
 }
 
