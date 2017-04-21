@@ -1,0 +1,47 @@
+Partlist
+
+Exported from Mimi_layout.brd at 4/21/2017 12:10 PM
+
+EAGLE Version 7.6.0 Copyright (c) 1988-2016 CadSoft
+
+Assembly variant: 
+
+Part          Value          Package   Library          Position (inch)       Orientation
+
+C1            10uF           EIA3216   SparkFun         (0.33 0.85)           MR90
+C2            68uF           EIA3528   SparkFun         (0.32 0.42)           MR90
+C3            100nf          EIA3216   SparkFun         (1.862 1.448)         R90
+C4            100nf          EIA3216   SparkFun         (1.355 1.225)         R180
+D1            MBRA140        SMA-DIODE SparkFun         (0.52 0.45)           MR270
+EC4-500                      1X03      pinhead          (1.322 1.541)         R180
+FAN                          1X02      pinhead          (1.09 0.33)           MR90
+IC1           AD820N         DIL08     analog-devices   (1.449 0.892)         R270
+IC2           AD820N         DIL08     analog-devices   (1.927 0.893)         R270
+IC3           AD820N         DIL08     analog-devices   (1.898 0.312)         R270
+L1            47uH           CR54      SparkFun         (0.52 0.82)           MR0
+MICS_03                      1X04      pinhead          (1.33 0.24)           R270
+MKR1000_LEFT                 1X14      pinhead          (0.13 0.89)           R90
+MKR1000_RIGHT                1X14      pinhead          (0.93 0.89)           R90
+R1            1K             R0805     resistor         (0.78 0.94)           R90
+R2            1.56k          R0805     resistor         (0.73 0.73)           R90
+R3            330            R0805     resistor         (1.989 1.453)         R270
+R4            330            R0805     resistor         (1.588 0.366)         R0
+R5            330            R0805     resistor         (1.987 1.262)         R90
+R6            10k            R0805     resistor         (1.108 1.257)         R270
+R7            10k            R0805     resistor         (1.108 1.07)          R270
+R8            10K            R0805     resistor         (1.11 0.78)           R90
+R9            0              R0805     resistor         (0.64 0.275)          R0
+R10           0              R0805     resistor         (0.64 0.425)          R0
+R11           820            R0805     resistor         (1.11 0.52)           R90
+R12           82             R0805     resistor         (1.33 0.54)           R270
+R13           0              R0805     resistor         (0.38 0.6)            R0
+R14           10k            R0805     resistor         (1.176 0.79)          MR90
+R15           10k            R0805     resistor         (1.051 0.795)         MR270
+R16           10             R0805     resistor         (1.92 0.938)          MR180
+R17           10             R0805     resistor         (1.575 0.575)         R0
+R18           10k            R0805     resistor         (1.672 1.455)         R90
+R19           330            R0805     resistor         (1.896 0.315)         MR180
+SHINYEI                      1X03      pinhead          (0.53 1.48)           MR0
+SHT31_CON                    1X07      pinhead          (0.44 0.08)           MR0
+U1            NCP1402        SOT23-5   SparkFun         (0.7 0.56)            MR270
+U2            V_REG_317SMD   SOT223    SparkFun-PowerIC (0.51 1.14)           R90
