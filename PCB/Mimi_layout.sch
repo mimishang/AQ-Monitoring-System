@@ -5549,6 +5549,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="167.64" y1="81.28" x2="167.64" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="167.64" y1="88.9" x2="170.18" y2="91.44" width="0.1524" layer="91"/>
 <label x="170.18" y="91.44" size="1.778" layer="95"/>
+<junction x="167.64" y="81.28"/>
 </segment>
 </net>
 <net name="MKR_A2" class="0">
@@ -5571,6 +5572,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="38.1" y1="-66.04" x2="60.96" y2="-66.04" width="0.1524" layer="91"/>
 <wire x1="38.1" y1="-48.26" x2="38.1" y2="-66.04" width="0.1524" layer="91"/>
 <label x="60.96" y="-66.04" size="1.778" layer="95"/>
+<junction x="38.1" y="-66.04"/>
 </segment>
 </net>
 <net name="MKR_A4" class="0">
@@ -5686,6 +5688,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="147.32" y1="106.68" x2="147.32" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="106.68" x2="142.24" y2="111.76" width="0.1524" layer="91"/>
 <label x="142.24" y="111.76" size="1.778" layer="95"/>
+<junction x="142.24" y="106.68"/>
 </segment>
 <segment>
 <wire x1="25.4" y1="66.04" x2="33.02" y2="66.04" width="0.1524" layer="91"/>
@@ -5839,6 +5842,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <pinref part="R15" gate="G$1" pin="2"/>
 <wire x1="93.98" y1="-2.54" x2="93.98" y2="0" width="0.1524" layer="91"/>
 <label x="93.98" y="0" size="1.778" layer="95"/>
+<junction x="93.98" y="-2.54"/>
 </segment>
 <segment>
 <pinref part="IC1" gate="G$1" pin="+VS"/>
@@ -5864,6 +5868,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="86.36" y1="76.2" x2="86.36" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="111.76" y1="76.2" x2="111.76" y2="73.66" width="0.1524" layer="91"/>
+<junction x="111.76" y="76.2"/>
 </segment>
 </net>
 <net name="PM_OUT" class="0">
@@ -5887,6 +5892,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="60.96" y1="0" x2="30.48" y2="0" width="0.1524" layer="91"/>
 <pinref part="EC4-500" gate="A" pin="2"/>
 <wire x1="30.48" y1="0" x2="-12.7" y2="0" width="0.1524" layer="91"/>
+<junction x="30.48" y="0"/>
 </segment>
 </net>
 <net name="CO_S" class="0">
@@ -5917,6 +5923,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="30.48" y1="10.16" x2="20.32" y2="10.16" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="10.16" x2="50.8" y2="10.16" width="0.1524" layer="91"/>
 <pinref part="R7" gate="G$1" pin="1"/>
+<junction x="30.48" y="10.16"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -5931,6 +5938,8 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="-5.08" y1="-63.5" x2="-5.08" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="-5.08" y1="-43.18" x2="78.74" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="-43.18" x2="78.74" y2="-30.48" width="0.1524" layer="91"/>
+<junction x="78.74" y="-30.48"/>
+<junction x="78.74" y="-2.54"/>
 </segment>
 </net>
 <net name="N$6" class="0">
@@ -5966,6 +5975,8 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <pinref part="C3" gate="G$1" pin="-"/>
 <wire x1="5.08" y1="-17.78" x2="5.08" y2="-25.4" width="0.1524" layer="91"/>
 <wire x1="5.08" y1="-17.78" x2="2.54" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="5.08" y="-17.78"/>
+<junction x="35.56" y="-25.4"/>
 </segment>
 </net>
 <net name="N$9" class="0">
@@ -5982,6 +5993,8 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="-7.62" y1="-25.4" x2="-12.7" y2="-25.4" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="-30.48" x2="-12.7" y2="-68.58" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="1"/>
+<junction x="-12.7" y="-25.4"/>
+<junction x="-12.7" y="-30.48"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -5992,6 +6005,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="0" y1="-68.58" x2="0" y2="-71.12" width="0.1524" layer="91"/>
 <pinref part="IC3" gate="G$1" pin="IN+"/>
 <wire x1="0" y1="-68.58" x2="7.62" y2="-68.58" width="0.1524" layer="91"/>
+<junction x="0" y="-68.58"/>
 </segment>
 </net>
 <net name="N$11" class="0">
@@ -6002,6 +6016,7 @@ Source: http://www.analog.com/static/imported-files/data_sheets/AD820.pdf</descr
 <wire x1="5.08" y1="-63.5" x2="5.08" y2="-48.26" width="0.1524" layer="91"/>
 <pinref part="R19" gate="G$1" pin="1"/>
 <wire x1="5.08" y1="-48.26" x2="27.94" y2="-48.26" width="0.1524" layer="91"/>
+<junction x="5.08" y="-63.5"/>
 </segment>
 </net>
 </nets>
