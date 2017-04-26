@@ -12,6 +12,7 @@
 //ELINS UGM
 //
 //Modified for Hackster.io project for the MKR1000 
+//https://www.hackster.io/detox/send-mkr1000-data-to-google-sheets-1175ca
 //by Stephen Borsay(Portland, OR, USA)
 //Since Arduino can't https, we need to use Pushingbox API (uses http)to run 
 //the Google Script (uses https). Alternatly use Ivan's SecureWifi encryption
@@ -32,8 +33,8 @@ Adafruit_SHT31 sht31 = Adafruit_SHT31();
 const char WEBSITE[] = "api.pushingbox.com"; //pushingbox API server
 const String devid = "v9606769D2CC718F"; //device ID on Pushingbox for our Scenario
 
-const char* MY_SSID = "PSU"; //does not currently seem to want to connect to PSU network, can connect at home fine
-const char* MY_PWD =  ""; //wifi password
+const char* MY_SSID = "Condor Wednesdays"; //does not currently seem to want to connect to PSU network, can connect at home fine
+const char* MY_PWD =  "HOOKERDICK69"; //wifi password
 
 //Define analog input and values for for Mics 03 sensor:
 const int OzoneMPin=A1; 
@@ -89,8 +90,8 @@ void setup() {
     Serial.print("Attempting to connect to Network: ");
     Serial.println(MY_SSID);
     //Connect to WPA/WPA2 network.Change this line if using open/WEP network
-    //status = WiFi.begin(MY_SSID, MY_PWD); //connect to secured wifi
-    status = WiFi.begin(MY_SSID); //connect to open wifi
+    status = WiFi.begin(MY_SSID, MY_PWD); //connect to secured wifi
+    //status = WiFi.begin(MY_SSID); //connect to open wifi
     delay(10000);  // wait 10 seconds for connection:
   }
   Serial.println("Connected to wifi");
@@ -110,12 +111,12 @@ void loop() {
   //Use float for higher resolution
   
   //read temp
-  int humidityData = 0;// sht31.readTemperature(); 
+  int Temp = sht31.readTemperature(); 
   //read humidity
-  int celData = 0;//sht31.readHumidity();
+  int Hum = sht31.readHumidity();
  
   //Read Particle Count from PM sensor
-
+/*
   duration = pulseIn(pin, LOW);
   lowpulseoccupancy = lowpulseoccupancy+duration;
 
@@ -130,27 +131,27 @@ void loop() {
     lowpulseoccupancy = 0;
     starttime = millis();
   }
-
-  int fehrData = concentration;
+*/
+  int PPM =1;// concentration;
   //read O3
-  int hifData = analogRead(OzoneMPin); //Read value from ozone pin
+  int Ozone =10; //analogRead(OzoneMPin); //Read value from ozone pin
   //read CO
-  int hicData = analogRead(COPin);
+  int CO =100; //analogRead(COPin);
 
   Serial.print("Temperature: ");
-  Serial.print(humidityData);
+  Serial.print(Temp);
   Serial.print(" *F\n");
   Serial.print("Humidity: ");
-  Serial.print(celData);
+  Serial.print(Hum);
   Serial.print("%\n");
   Serial.print("PPM:  ");
-  Serial.print(fehrData);
+  Serial.print(PPM);
   Serial.print("\n");
   Serial.print("Ozone Concentration: ");
-  Serial.print(hicData);
+  Serial.print(Ozone);
   Serial.print("\n");
   Serial.print("CO Concentration: ");
-  Serial.print(hifData);
+  Serial.print(CO);
   Serial.println("\n");
 
   Serial.println("\nSending Data to Server..."); 
@@ -160,11 +161,11 @@ void loop() {
     //API service using WiFi Client through PushingBox then relayed to Google
     if (client.connect(WEBSITE, 80)){ 
          client.print("GET /pushingbox?devid=" + devid
-       + "&humidityData=" + (String) humidityData
-       + "&celData="      + (String) celData
-       + "&fehrData="     + (String) fehrData
-       + "&hicData="      + (String) hicData
-       + "&hifData="      + (String) hifData
+       + "&humidityData=" + (String) Temp
+       + "&celData="      + (String) Hum
+       + "&fehrData="     + (String) PPM
+       + "&hicData="      + (String) Ozone
+       + "&hifData="      + (String) CO
          );
 
       // HTTP 1.1 provides a persistent connection, allowing batched requests
@@ -178,4 +179,3 @@ void loop() {
       Serial.println("\nData Sent"); 
     }
 }
-
