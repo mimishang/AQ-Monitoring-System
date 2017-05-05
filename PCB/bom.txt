@@ -1,6 +1,6 @@
 Partlist
 
-Exported from Mimi_layout.brd at 4/21/2017 12:10 PM
+Exported from Mimi_layout.brd at 5/4/2017 8:13 PM
 
 EAGLE Version 7.6.0 Copyright (c) 1988-2016 CadSoft
 
@@ -8,10 +8,10 @@ Assembly variant:
 
 Part          Value          Package   Library          Position (inch)       Orientation
 
-C1            10uF           EIA3216   SparkFun         (0.33 0.85)           MR90
-C2            68uF           EIA3528   SparkFun         (0.32 0.42)           MR90
-C3            100nf          EIA3216   SparkFun         (1.862 1.448)         R90
-C4            100nf          EIA3216   SparkFun         (1.355 1.225)         R180
+C5            100nf          C0805     resistor         (1.4 1.22)            R0
+C6            68uf           C0805     resistor         (0.32 0.43)           MR270
+C8            100nf          C0805     resistor         (1.84 1.47)           R270
+C9            10uf           C0805     resistor         (0.33 0.86)           MR270
 D1            MBRA140        SMA-DIODE SparkFun         (0.52 0.45)           MR270
 EC4-500                      1X03      pinhead          (1.322 1.541)         R180
 FAN                          1X02      pinhead          (1.09 0.33)           MR90
