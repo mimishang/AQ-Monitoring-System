@@ -23,6 +23,7 @@
 //  Ozone -> A1
 //  CO    -> A3
 //  SHT31 -> iic (SCL/SDA)
+//  CO2   -> iic (SCL/SDA)
 #include <WiFi101.h>
 #include "Adafruit_SHT31.h"
 Adafruit_SHT31 sht31 = Adafruit_SHT31();
@@ -33,8 +34,8 @@ Adafruit_SHT31 sht31 = Adafruit_SHT31();
 const char WEBSITE[] = "api.pushingbox.com"; //pushingbox API server
 const String devid = "v9606769D2CC718F"; //device ID on Pushingbox for our Scenario
 
-const char* MY_SSID = "Condor Wednesdays"; //does not currently seem to want to connect to PSU network, can connect at home fine
-const char* MY_PWD =  "HOOKERDICK69"; //wifi password
+const char* MY_SSID = "PSU"; //does not currently seem to want to connect to PSU network, can connect at home fine
+const char* MY_PWD =  ""; //wifi password
 
 //Define analog input and values for for Mics 03 sensor:
 const int OzoneMPin=A1; 
@@ -77,9 +78,83 @@ void printWifiStatus() {
   Serial.println(" dBm");
 }
 
+int readCO2() { 
+  int co2_value = 0;  // Store the CO2 value inside this variable. 
+  digitalWrite(13, HIGH);  // turn on LED 
+  // On most Arduino platforms this pin is used as an indicator light. 
+  ////////////////////////// 
+  /* Begin Write Sequence */ 
+  ////////////////////////// 
+  Wire.beginTransmission(0x68); 
+  Wire.write(0x22); 
+  Wire.write(0x00); 
+  Wire.write(0x08); 
+  Wire.write(0x2A); 
+  Wire.endTransmission(); 
+  ///////////////////////// 
+  /* End Write Sequence. */ 
+  ///////////////////////// 
+  /* 
+    Wait 10ms for the sensor to process our command. The sensors's 
+    primary duties are to accurately measure CO2 values. Waiting 10ms 
+    ensures the data is properly written to RAM 
+  */ 
+  delay(10); 
+  ///////////////////////// 
+  /* Begin Read Sequence */ 
+  ///////////////////////// 
+  /* 
+    Since we requested 2 bytes from the sensor we must read in 4 bytes. 
+    This includes the payload, checksum, and command status byte. 
+  */ 
+  Wire.requestFrom(0x68, 4); 
+  byte i = 0; 
+  byte buffer[4] = {0, 0, 0, 0}; 
+  /* 
+    Wire.available() is not necessary. Implementation is obscure but we 
+    leave it in here for portability and to future proof our code 
+  */ 
+  while (Wire.available()) 
+  { 
+    buffer[i] = Wire.read(); 
+    i++; 
+  } 
+  /////////////////////// 
+  /* End Read Sequence */ 
+  /////////////////////// 
+  /* 
+    Using some bitwise manipulation we will shift our buffer 
+    into an integer for general consumption 
+  */ 
+  co2_value = 0; 
+  co2_value |= buffer[1] & 0xFF; 
+  co2_value = co2_value << 8; 
+  co2_value |= buffer[2] & 0xFF; 
+  byte sum = 0; //Checksum Byte 
+  sum = buffer[0] + buffer[1] + buffer[2]; //Byte addition utilizes overflow 
+  if (sum == buffer[3]) 
+  { 
+    // Success! 
+    digitalWrite(13, LOW); 
+    return co2_value; 
+  } 
+  else 
+  { 
+    // Failure! 
+    /* 
+      Checksum failure can be due to a number of factors, 
+      fuzzy electrons, sensor busy, etc. 
+    */ 
+    digitalWrite(13, LOW); 
+    return 0; 
+  } 
+}
+
 void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
+  pinMode(0,INPUT);
+  starttime = millis();
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
@@ -90,8 +165,8 @@ void setup() {
     Serial.print("Attempting to connect to Network: ");
     Serial.println(MY_SSID);
     //Connect to WPA/WPA2 network.Change this line if using open/WEP network
-    status = WiFi.begin(MY_SSID, MY_PWD); //connect to secured wifi
-    //status = WiFi.begin(MY_SSID); //connect to open wifi
+    //status = WiFi.begin(MY_SSID, MY_PWD); //connect to secured wifi
+    status = WiFi.begin(MY_SSID); //connect to open wifi
     delay(10000);  // wait 10 seconds for connection:
   }
   Serial.println("Connected to wifi");
@@ -111,12 +186,11 @@ void loop() {
   //Use float for higher resolution
   
   //read temp
-  int Temp = sht31.readTemperature(); 
+  int Temp = 0;//sht31.readTemperature(); 
   //read humidity
-  int Hum = sht31.readHumidity();
+  int Hum = 0;//sht31.readHumidity();
  
   //Read Particle Count from PM sensor
-/*
   duration = pulseIn(pin, LOW);
   lowpulseoccupancy = lowpulseoccupancy+duration;
 
@@ -131,12 +205,13 @@ void loop() {
     lowpulseoccupancy = 0;
     starttime = millis();
   }
-*/
-  int PPM =1;// concentration;
+  
+  float PPM = concentration;
   //read O3
-  int Ozone =10; //analogRead(OzoneMPin); //Read value from ozone pin
+  //int Ozone = analogRead(OzoneMPin); //Read value from ozone pin
+  float Ozone = 385-(Ozone/2);//ozone w/ a calibration curve
   //read CO
-  int CO =100; //analogRead(COPin);
+  float CO = analogRead(COPin);
 
   Serial.print("Temperature: ");
   Serial.print(Temp);
